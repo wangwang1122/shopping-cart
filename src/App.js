@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import LeftButtons from './components/leftnavigator/LeftNav';
 import ProdDisp from './components/products/Products';
 import Grid from '@material-ui/core/Grid';
-
+import TemporaryDrawer from './components/cart/shoppingcart';
 
 
 const App = () => {
@@ -20,7 +20,7 @@ const App = () => {
           <ProdDisp/>
         </Grid>
         <Grid item xs={1}>
-          Cart
+          <TemporaryDrawer/>
         </Grid>
       </Grid>
     </React.Fragment>

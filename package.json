@@ -5,6 +5,7 @@
   "homepage": "./",
   "dependencies": {
     "@material-ui/core": "^4.4.3",
+    "@material-ui/icons": "^4.4.3",
     "antd": "^3.23.5",
     "bootstrap": "^4.3.1",
     "firebase": "^7.0.0",
