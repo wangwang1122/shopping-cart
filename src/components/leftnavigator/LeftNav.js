@@ -15,8 +15,8 @@ export default function LeftButtons() {
   const classes = useStyles();
 
   return (
-    <div>
     
+    <ul>
     <p>Sizes:</p>
     <Fab size="small"  className={classes.fab}>
       xs
@@ -41,6 +41,6 @@ export default function LeftButtons() {
     <Fab size="small"  className={classes.fab}>
       xxl
     </Fab>
-  </div>
+    </ul>
   );
 }
