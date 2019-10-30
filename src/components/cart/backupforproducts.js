@@ -43,36 +43,20 @@ const useStyles = makeStyles(theme => ({
   }));
   
   // shoppingcart
-  
-  // const useSelection = () => {
-  //   const [selected, setSelected] = useState({
-  //     right: false,
-  //   });
-  //   const toggleDrawer = (side, open) => event => {
-  //     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-  //       return;
-  //     }
-  
-  //     setSelected({ ...selected, [side]: open });
-  //   };
-  //   return [ selected, toggleDrawer ];
-  // };
-  
-  export function ShoppingCart({state,toggleDrawer}) {
+
+  export function ShoppingCart() {
     const classes = useStyles();
-    // const [state, setState] = React.useState({
-    //   right: false,
-    // });
+    const [state, setState] = React.useState({
+      right: false,
+    });
   
-    // const toggleDrawer = (side, open) => event => {
-    //   if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-    //     return;
-    //   }
+    const toggleDrawer = (side, open) => event => {
+      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+        return;
+      }
   
-    //   setState({ ...state, [side]: open });
-    // };
-    
-    // const [state,toggleDrawer]=useSelection();
+      setState({ ...state, [side]: open });
+    };
   
     const sideList = side => (
       <div
@@ -123,12 +107,11 @@ const useStyles = makeStyles(theme => ({
 
 // ProductList
 
-  const ProdDisp = ({state,toggleDrawer}) => {
+  const ProdDisp = () => {
     const [data, setData] = useState({});
     const products = Object.values(data);
     const classes = useStyles();
-    // const [state,toggleDrawer]=useSelection();
-
+  
     useEffect(() => {
       const fetchProducts = async () => {
         const response = await fetch('../../data/products.json');
@@ -145,8 +128,7 @@ const useStyles = makeStyles(theme => ({
       <GridList cellHeight={550} className={classes.gridList} cols={4}>
         {products.map(product => (
           <GridListTile key={product.sku} >
-            {/* onClick={toggleDrawer('right', true)} */}
-          <Card style={{height:600} }  onClick={toggleDrawer('right', true)} >
+          <Card style={{height:600} } onClick={toggleDrawer('right', true)}  >
           <CardActionArea>
           <CardMedia 
             component="img"

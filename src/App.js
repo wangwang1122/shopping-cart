@@ -1,12 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import LeftButtons from './components/leftnavigator/LeftNav';
 import ProdDisp from './components/products/Products';
+import {ShoppingCart} from './components/products/Products';
 import Grid from '@material-ui/core/Grid';
-import TemporaryDrawer from './components/cart/shoppingcart';
+// import TemporaryDrawer from './components/cart/shoppingcart';
 
+const useSelection = () => {
+  const [selected, setSelected] = useState({
+    right: false,
+  });
+  const toggleDrawer = (side, open) => event => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
 
-const App = () => {
+    setSelected({ ...selected, [side]: open });
+  };
+  return [ selected, toggleDrawer ];
+};
+
+const App = () => { 
   
+  const [state,toggleDrawer]=useSelection();
 
   
   return(
@@ -17,10 +32,10 @@ const App = () => {
           <LeftButtons/>
         </Grid>
         <Grid item xs={9}>
-          <ProdDisp/>
+          <ProdDisp state={state} toggleDrawer={toggleDrawer}/>
         </Grid>
         <Grid item xs={1}>
-          <TemporaryDrawer/>
+          <ShoppingCart state={state} toggleDrawer={toggleDrawer}/>
         </Grid>
       </Grid>
     </React.Fragment>
