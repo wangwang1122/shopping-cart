@@ -15,7 +15,9 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import IconButton from '@material-ui/core/IconButton';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -42,23 +44,7 @@ const useStyles = makeStyles(theme => ({
     },
   }));
   
-  // shoppingcart
-  
-  // const useSelection = () => {
-  //   const [selected, setSelected] = useState({
-  //     right: false,
-  //   });
-  //   const toggleDrawer = (side, open) => event => {
-  //     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-  //       return;
-  //     }
-  
-  //     setSelected({ ...selected, [side]: open });
-  //   };
-  //   return [ selected, toggleDrawer ];
-  // };
-  
-  export function ShoppingCart({state,toggleDrawer}) {
+  export function ShoppingCart({products,state,toggleDrawer,totalprice}) {
     const classes = useStyles();
     // const [state, setState] = React.useState({
     //   right: false,
@@ -82,21 +68,39 @@ const useStyles = makeStyles(theme => ({
         onKeyDown={toggleDrawer(side, false)}
       >
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} /> */}
-              aaaa
-            </ListItem>
-          ))}
+        {products.map(product => (
+        // if(product.sku) {
+        <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          {/* <Avatar alt="Remy Sharp" src={"../../data/products/"+product.sku+"_1.jpg"} /> */}
+          <img src={"../../data/products/"+product.sku+"_1.jpg"}/>
+        </ListItemAvatar>
+        <ListItemText
+          primary={product.title}
+          secondary={
+            <React.Fragment>
+              <Typography
+                component="span"
+                variant="body2"
+                className={classes.inline}
+                color="textPrimary"
+              >
+                {product.style}
+              </Typography>
+             {product.incart+1}
+            </React.Fragment>
+          }
+        />
+      </ListItem>
+      
+      ))}
+        <Divider variant="inset" component="li" />
         </List>
         <Divider />
         <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
             <ListItem button key={text}>
-              {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} /> */}
-              bbb
+              {totalprice}}
             </ListItem>
           ))}
         </List>
@@ -108,10 +112,7 @@ const useStyles = makeStyles(theme => ({
   
     return (
       <div>
-        
         <IconButton onClick={toggleDrawer('right', true)}><ShoppingCartIcon/></IconButton>
-        
-  
         <Drawer anchor="right" open={state.right} onClose={toggleDrawer('right', false)}>
           {sideList('right')}
         </Drawer>
@@ -123,20 +124,20 @@ const useStyles = makeStyles(theme => ({
 
 // ProductList
 
-  const ProdDisp = ({state,toggleDrawer}) => {
-    const [data, setData] = useState({});
-    const products = Object.values(data);
+  const ProdDisp = ({products,state,toggleDrawer,incart,handleCart}) => {
+    // const [data, setData] = useState({});
+    // const products = Object.values(data);
     const classes = useStyles();
     // const [state,toggleDrawer]=useSelection();
 
-    useEffect(() => {
-      const fetchProducts = async () => {
-        const response = await fetch('../../data/products.json');
-        const json = await response.json();
-        setData(json);
-      };
-      fetchProducts();
-    }, []);
+    // useEffect(() => {
+    //   const fetchProducts = async () => {
+    //     const response = await fetch('../../data/products.json');
+    //     const json = await response.json();
+    //     setData(json);
+    //   };
+    //   fetchProducts();
+    // }, []);
       
   return(
     // <ul className={classes.root}>
@@ -146,13 +147,13 @@ const useStyles = makeStyles(theme => ({
         {products.map(product => (
           <GridListTile key={product.sku} >
             {/* onClick={toggleDrawer('right', true)} */}
-          <Card style={{height:600} }  onClick={toggleDrawer('right', true)} >
+          <Card style={{height:600} }  onClick={()=>{handleCart(product,incart);toggleDrawer('right', true);} }>
           <CardActionArea>
           <CardMedia 
             component="img"
             alt="product"
             // height="335"
-            image={"../../data/products/"+product.sku+"_2.jpg"}
+            image={"../../data/products/"+product.sku+"_1.jpg"}
             title="product"
           />
         <CardContent>
