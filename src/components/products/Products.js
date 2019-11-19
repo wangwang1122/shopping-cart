@@ -42,38 +42,37 @@ const useStyles = makeStyles(theme => ({
     fullList: {
       width: 'auto',
     },
+    button:{
+      height: "10px",
+
+    },
   }));
   
-  export function ShoppingCart({products,state,toggleDrawer,totalprice}) {
+  const div1 = {
+    width: "30px",
+    minHeight: "40px",
+    boxSizing: "border-box"
+  };
+
+  
+
+
+  export function ShoppingCart({products,state,toggleDrawer,totalprice,handlePlus}) {
     const classes = useStyles();
-    // const [state, setState] = React.useState({
-    //   right: false,
-    // });
   
-    // const toggleDrawer = (side, open) => event => {
-    //   if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-    //     return;
-    //   }
-  
-    //   setState({ ...state, [side]: open });
-    // };
-    
-    // const [state,toggleDrawer]=useSelection();
-  
+
     const sideList = side => (
       <div
         className={classes.list}
         role="presentation"
-        onClick={toggleDrawer(side, false)}
-        onKeyDown={toggleDrawer(side, false)}
-      >
+        >
         <List>
         {products.map(product => (
         // if(product.sku) {
-        <ListItem alignItems="flex-start">
+        <ListItem alignItems="flex-start" key={product.sku}>
         <ListItemAvatar>
           {/* <Avatar alt="Remy Sharp" src={"../../data/products/"+product.sku+"_1.jpg"} /> */}
-          <img src={"../../data/products/"+product.sku+"_1.jpg"}/>
+          <img src={"../../data/products/"+product.sku+"_1.jpg"} style={div1}/>
         </ListItemAvatar>
         <ListItemText
           primary={product.title}
@@ -88,21 +87,31 @@ const useStyles = makeStyles(theme => ({
                 {product.style}
               </Typography>
              {product.incart+1}
+             <br/>
+                <input type="button" className="counterLeftButton" value="-" />
+                {/* <input type="text" value={product.incart+1}/> */}
+                <input type="button" className="counterRightButton" value="+" />
+                <button onCilck={()=>{console.log("test if clicked")}}>
+                  test
+                  </button>
             </React.Fragment>
           }
         />
       </ListItem>
       
       ))}
-        <Divider variant="inset" component="li" />
         </List>
+
         <Divider />
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          {/* {['All mail', 'Trash', 'Spam'].map((text, index) => (
             <ListItem button key={text}>
               {totalprice}}
             </ListItem>
-          ))}
+          ))} */}
+           <ListItem  >
+            SUBTOTAL:{totalprice}
+            </ListItem>
         </List>
       </div>
     );
@@ -114,7 +123,7 @@ const useStyles = makeStyles(theme => ({
       <div>
         <IconButton onClick={toggleDrawer('right', true)}><ShoppingCartIcon/></IconButton>
         <Drawer anchor="right" open={state.right} onClose={toggleDrawer('right', false)}>
-          {sideList('right')}
+          {sideList('right') }
         </Drawer>
       </div>
     );
@@ -147,7 +156,7 @@ const useStyles = makeStyles(theme => ({
         {products.map(product => (
           <GridListTile key={product.sku} >
             {/* onClick={toggleDrawer('right', true)} */}
-          <Card style={{height:600} }  onClick={()=>{handleCart(product,incart);toggleDrawer('right', true);} }>
+          <Card style={{height:600} }  onClick={function(event){toggleDrawer('right', true);handleCart(product,incart);console.log("card clicked")} }>
           <CardActionArea>
           <CardMedia 
             component="img"

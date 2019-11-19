@@ -12,6 +12,8 @@ const useSelection = () => {
     right: false,
   });
   const toggleDrawer = (side, open) => event => {
+    console.log("called in the function");
+
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
@@ -75,8 +77,6 @@ const App = () => {
     const id=product.sku;
     let flag=1;
     let count=0;
-    console.log(product);
-    console.log(incart);
     for (let i=0;i<incart.length;i++){
       if(incart[i].sku==id){
         cartproduct[i].incart=cartproduct[i].incart+1;
@@ -86,14 +86,30 @@ const App = () => {
     if(flag){
       cartproduct.push(product);
     }
-    for (let i=1;i<incart.length;i++){
-        console.log(count);
+    for (let i=0;i<incart.length;i++){
+        // console.log(count);
         count=count+(cartproduct[i].incart+1)*cartproduct[i].price;
-        console.log(cartproduct[i].price);
+        // console.log(cartproduct[i].price);
         
     }
     setData({...data,cart:cartproduct,totalprice:count});
   }
+  
+  const handlePlus= (product,incart)=>{
+    const cartproduct= incart;
+    const id=product.sku;
+    let count=0;
+    for (let i=0;i<incart.length;i++){
+      if(incart[i].sku==id){
+        cartproduct[i].incart=cartproduct[i].incart+1;
+      }
+    }
+    for (let i=0;i<incart.length;i++){
+        count=count+(cartproduct[i].incart+1)*cartproduct[i].price;
+    }
+    setData({...data,cart:cartproduct,totalprice:count});
+  }
+
 
 
   const products = Object.values(data.arr);
@@ -112,18 +128,7 @@ const App = () => {
       const json = await response.json();
       let a='51498472915966370';
       setData({arr:json,
-              cart:[{
-                currencyFormat: "$",
-                currencyId: "USD",
-                description: "",
-                incart: 0,
-                instock: 100,
-                isFreeShipping: true,
-                price: 0,
-                sku: '' ,
-                style: '',
-                title: '',
-              }]});
+              cart:[]});
       // setData({incart:json});
       // let a=Object.values(json);
       // console.log(a[1].sku);
@@ -145,7 +150,7 @@ const App = () => {
           <ProdDisp products={products} state={state} toggleDrawer={toggleDrawer} incart={data.cart} handleCart={handleCart}/>
         </Grid>
         <Grid item xs={1}>
-          <ShoppingCart products={data.cart} state={state} toggleDrawer={toggleDrawer} totalprice={data.totalprice}/>
+          <ShoppingCart products={data.cart} state={state} toggleDrawer={toggleDrawer} totalprice={data.totalprice} handlePlus={handlePlus}/>
         </Grid>
       </Grid>
     </React.Fragment>
