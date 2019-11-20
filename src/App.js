@@ -70,6 +70,7 @@ const App = () => {
     arr:[],
     cart:[],
     totalprice: 0,
+    size:[],
     });
   
   const handleCart= (product,incart)=>{
@@ -153,17 +154,22 @@ const App = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       const response = await fetch('./data/products.json');
+      const sizeresponse = await fetch('./data/inventory.json');
 
       const json = await response.json();
+      const sizejson = await sizeresponse.json();
+
       let a='51498472915966370';
       setData({arr:json,
-              cart:[]});
+              cart:[],
+              size:sizejson});
       // setData({incart:json});
       // let a=Object.values(json);
       // console.log(a[1].sku);
+      console.log(sizejson);
+
     };
     fetchProducts();
-   
   }, []);
   
   
