@@ -57,10 +57,10 @@ const useStyles = makeStyles(theme => ({
   
 
 
-  export function ShoppingCart({products,state,toggleDrawer,totalprice,handlePlus}) {
+  export function ShoppingCart({products,state,toggleDrawer,totalprice,handlePlus,handleMinus,deleteItem}) {
     const classes = useStyles();
   
-
+    
     const sideList = side => (
       <div
         className={classes.list}
@@ -88,15 +88,13 @@ const useStyles = makeStyles(theme => ({
               </Typography>
              {product.incart+1}
              <br/>
-                <input type="button" className="counterLeftButton" value="-" />
-                {/* <input type="text" value={product.incart+1}/> */}
-                <input type="button" className="counterRightButton" value="+" />
-                <button onCilck={()=>{console.log("test if clicked")}}>
-                  test
-                  </button>
+                <input type="button" className="counterLeftButton" value="-" onClick={()=>{handleMinus(product,products)}}/>
+                <input type="button" value={product.incart+1}/>
+                <input type="button" className="counterRightButton" value="+" onClick={()=>{handlePlus(product,products)}}/>
             </React.Fragment>
           }
         />
+        <button onClick={()=>{deleteItem(product,products)}}>delete</button>
       </ListItem>
       
       ))}

@@ -78,7 +78,7 @@ const App = () => {
     let flag=1;
     let count=0;
     for (let i=0;i<incart.length;i++){
-      if(incart[i].sku==id){
+      if(incart[i].sku===id){
         cartproduct[i].incart=cartproduct[i].incart+1;
         flag=0;
       }
@@ -100,8 +100,37 @@ const App = () => {
     const id=product.sku;
     let count=0;
     for (let i=0;i<incart.length;i++){
-      if(incart[i].sku==id){
+      if(incart[i].sku===id){
         cartproduct[i].incart=cartproduct[i].incart+1;
+      }
+    }
+    for (let i=0;i<incart.length;i++){
+        count=count+(cartproduct[i].incart+1)*cartproduct[i].price;
+    }
+    setData({...data,cart:cartproduct,totalprice:count});
+  }
+  const handleMinus= (product,incart)=>{
+    const cartproduct= incart;
+    const id=product.sku;
+    let count=0;
+    for (let i=0;i<incart.length;i++){
+      if(incart[i].sku===id&&cartproduct[i].incart>0){
+        cartproduct[i].incart=cartproduct[i].incart-1;
+      }
+    }
+    for (let i=0;i<incart.length;i++){
+        count=count+(cartproduct[i].incart+1)*cartproduct[i].price;
+    }
+    setData({...data,cart:cartproduct,totalprice:count});
+  }
+
+  const deleteItem= (product,incart)=>{
+    const cartproduct= incart;
+    const id=product.sku;
+    let count=0;
+    for (let i=0;i<incart.length;i++){
+      if(incart[i].sku===id){
+        cartproduct.splice(i,1);
       }
     }
     for (let i=0;i<incart.length;i++){
@@ -150,7 +179,7 @@ const App = () => {
           <ProdDisp products={products} state={state} toggleDrawer={toggleDrawer} incart={data.cart} handleCart={handleCart}/>
         </Grid>
         <Grid item xs={1}>
-          <ShoppingCart products={data.cart} state={state} toggleDrawer={toggleDrawer} totalprice={data.totalprice} handlePlus={handlePlus}/>
+          <ShoppingCart products={data.cart} state={state} toggleDrawer={toggleDrawer} totalprice={data.totalprice} handlePlus={handlePlus} handleMinus={handleMinus} deleteItem={deleteItem}/>
         </Grid>
       </Grid>
     </React.Fragment>
