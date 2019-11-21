@@ -1,8 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import {Button} from "rbx";
 import Fab from '@material-ui/core/Fab';
 import {Layout} from 'antd';
+import './style.scss';
 const {Sider}=Layout;
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -18,29 +19,23 @@ export default function LeftButtons() {
     
     <ul>
     <p>Sizes:</p>
-    <Fab size="small"  className={classes.fab}>
-      xs
-    </Fab>
-    <Fab size="small"  className={classes.fab}>
-      s
-    </Fab>
-    <Fab size="small"  className={classes.fab}>
+    <Button.Group>
+    <input
+            type="checkbox"
+            value="s"
+           />
+          <span className="checkmark">s</span>
+
+    <Button size="large">
       m
-    </Fab>
-    <Fab size="small"  className={classes.fab}>
-      ml
-    </Fab>
-    
-    <Fab size="small"  className={classes.fab}>
+    </Button>
+    <Button >
       l
-    </Fab>
-    
-    <Fab size="small" className={classes.fab}>
+    </Button>  
+    <Button size="medium" className={classes.fab}>
       xl
-    </Fab>
-    <Fab size="small"  className={classes.fab}>
-      xxl
-    </Fab>
+    </Button>
+    </Button.Group>
     </ul>
   );
 }

@@ -166,7 +166,6 @@ const App = () => {
       // setData({incart:json});
       // let a=Object.values(json);
       // console.log(a[1].sku);
-      console.log(sizejson);
 
     };
     fetchProducts();
